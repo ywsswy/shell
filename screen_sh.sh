@@ -47,12 +47,7 @@ function KillScript()
     kill -9 0
 }
 
-:<<'COMMENT'
-screen -p 2 -X stuff 'pwd\n'
-COMMENT
-
 $(YLog $LINENO DEBUG "para_num: $#")
-
 
 function GetStuffCmd()
 {
