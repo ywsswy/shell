@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#<ESC>这种ctrl命令
+
 if [ `basename $0` != 'bashdb' ];then
     arg0=$0
 else
