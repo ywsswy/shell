@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# * * * * * sh ~/workspace/shell/crontab_new.sh >>~/.crontab_new.log 2>&1
+# * * * * * sh ~/workspace/github.com/ywsswy/shell/crontab_new.sh >>~/.crontab_new.log 2>&1
 # TODO: 可重入
 
 if [ `basename $0` != 'bashdb' ];then
