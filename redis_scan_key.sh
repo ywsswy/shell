@@ -61,21 +61,10 @@ each_count=3
 count=0
 myIFS=$(echo -ne "\x0a\x0d")
 for ((;;))do
-	cmd=$(echo -ne "scan ${get_cursor} match \"*\" count ${each_count}")
+	cmd=$(echo -n "scan ${get_cursor} match * count ${each_count}")
 	mv cmd_file.bak cmd_file
 	sed -i.bak -r s/CMD/"${cmd}"/g cmd_file
 	script -e -q -c "cat cmd_file |redis-cli -c -h <ip> -p <port>" /dev/null >res_file
-	for((;;))do
-		if [ -e res_file ];then
-			wc_file="$(wc -l res_file)"
-			wc_file_head="${wc_file:0:1}"
-			if [ "${wc_file_head}" != "0" ];then
-				break
-			fi
-		fi
-		sleep 0.001
-	done
-	sync
 	i=0
 	while OLDIFS=${IFS}; IFS=${myIFS}; read -r line; ret=$?; IFS=${OLDIFS}; [ $ret -eq 0 ];do  #这个IFS置空，否则read line会把行首行尾的空白字符忽略掉的~，while的IFS变量会影响整个文件，所以放到函数局部中
 		i=$((i+1))
