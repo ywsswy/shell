@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-# 需要修改的地方是redis的地址 & cmd_file文件中写密码 & scan的个数
+# 需要修改的地方是redis的地址 & cmd_file文件中写密码 & scan的个数和总数 & match命令
+# cmd_file的格式是
+# ```
+# auto <pwd>
+# CMD
+# ```
+# TODO: 已知问题,如果each_count设置得过小可能该次scan不到,后面处理没考虑这种异常
 
 gEnableLogLevelVec=(
 "DEBUG"
@@ -57,14 +63,14 @@ function KillScript() {
 
 
 get_cursor="0"
-each_count=3
+each_count=10
 count=0
 myIFS=$(echo -ne "\x0a\x0d")
 for ((;;))do
 	cmd=$(echo -n "scan ${get_cursor} match * count ${each_count}")
 	mv cmd_file.bak cmd_file
 	sed -i.bak -r s/CMD/"${cmd}"/g cmd_file
-	script -e -q -c "cat cmd_file |redis-cli -c -h <ip> -p <port>" /dev/null >res_file
+	script -e -q -c "cat cmd_file |redis-cli -c -h <ip> -p <port>" /dev/null >res_file </dev/null
 	i=0
 	while OLDIFS=${IFS}; IFS=${myIFS}; read -r line; ret=$?; IFS=${OLDIFS}; [ $ret -eq 0 ];do  #这个IFS置空，否则read line会把行首行尾的空白字符忽略掉的~，while的IFS变量会影响整个文件，所以放到函数局部中
 		i=$((i+1))
