@@ -13,7 +13,6 @@ if [ -f ~/.bash_profile ];then
 fi
 
 gEnableLogLevelVec=(
-"DEBUG"
 "INFO0"
 "INFO1"
 "ERROR"
@@ -117,7 +116,7 @@ function RunCmd() {
 
 function Main() {
     arr=(
-        '0 0 2 10 2020 0 0 2 echo "Today mom is at home."'
+        '00 7 8 5 2023 0 0 2 echo "Today mom is at home."'
     )
 
     now_timestamp=$(date +%s)
