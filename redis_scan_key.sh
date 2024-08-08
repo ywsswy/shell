@@ -3,7 +3,7 @@
 # 需要修改的地方是redis的地址 & cmd_file文件中写密码 & scan的个数和总数 & match命令
 # cmd_file的格式是
 # ```
-# auto <pwd>
+# auth <pwd>
 # CMD
 # ```
 # TODO: 已知问题,如果each_count设置得过小可能该次scan不到,后面处理没考虑这种异常
