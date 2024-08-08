@@ -72,6 +72,7 @@ for ((;;))do
 	sed -i.bak -r s/CMD/"${cmd}"/g cmd_file
 	script -e -q -c "cat cmd_file |redis-cli -c -h <ip> -p <port>" /dev/null >res_file </dev/null
 	i=0
+        # TODO: 优化，不遍历文件的每一行进行处理；（1）校验文件行数至少2行；（2）获取&校验第一行；（3）获取&校验第二行；（4）从第三行开始 整个文件过一遍perl处理-不匹配的行输出唯一报错信息；（5）有报错信息则退出执行，没有报错则把整个文件输出
 	while OLDIFS=${IFS}; IFS=${myIFS}; read -r line; ret=$?; IFS=${OLDIFS}; [ $ret -eq 0 ];do  #这个IFS置空，否则read line会把行首行尾的空白字符忽略掉的~，while的IFS变量会影响整个文件，所以放到函数局部中
 		i=$((i+1))
 		#echo "line:${line}"
