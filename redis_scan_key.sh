@@ -89,19 +89,16 @@ for ((;;))do
 				$(KillScript)
 			fi
 		else
-			# get key
-			get_key=$(echo -ne "${line}" |perl -pe 's|.*?"(.*)".*?|\1|')
-			if [ "${get_key}" = "${line}" ];then
-				echo "get_key line err:${line}"
-				$(KillScript)
-			fi
-			echo "${get_key}"
+			break
 		fi
 	done < res_file
+	# get key
+	line=$(wc -l res_file|perl -pe 's/(.*) .*$/$1/')
+	tail -n +3 res_file |perl -pe 's|.*?"(.*)".*?|\1|'
 	if [ "${get_cursor}" = "0" ];then
 		break
 	fi
-	count=$((count + i - 2))
+	count=$((count + line - 2))
 	if [ $count -gt 30 ];then
 		break
 	fi
